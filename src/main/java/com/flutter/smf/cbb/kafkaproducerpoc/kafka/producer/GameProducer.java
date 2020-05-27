@@ -1,6 +1,6 @@
 package com.flutter.smf.cbb.kafkaproducerpoc.kafka.producer;
 
-import com.flutter.smf.cbb.kafkaproducerpoc.model.GameDTO;
+import com.flutter.smf.se.bb.game.contract.Game;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -24,38 +24,38 @@ public class GameProducer {
 
     private static String TOPIC = "cbb-game-events";
 
-    public ListenableFuture<SendResult<String, String>> sendGameEventSyncProducerRecord(GameDTO game) {
+    public ListenableFuture<SendResult<String, Game>> sendGameEventSyncProducerRecord(Game game) {
 
         String key = TOPIC;
-        String value = game.toString();
+        Game value = game;
 
         ProducerRecord producerRecord = buildProducerRecord(key,value,TOPIC);
-        ListenableFuture<SendResult<String, String>> listenableFuture = kafkaTemplate.send(producerRecord);
-        listenableFuture.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
+        ListenableFuture<SendResult<String, Game>> listenableFuture = kafkaTemplate.send(producerRecord);
+        listenableFuture.addCallback(new ListenableFutureCallback<SendResult<String, Game>>() {
             @Override
             public void onFailure(Throwable throwable) {
                 handleFailure(key, value, throwable);
             }
 
             @Override
-            public void onSuccess(SendResult<String, String> result) {
+            public void onSuccess(SendResult<String, Game> result) {
                 handleSuccess(key, value, result);
             }
         });
         return listenableFuture;
     }
 
-    private ProducerRecord buildProducerRecord(String key, String value, String topic) {
+    private ProducerRecord buildProducerRecord(String key, Game value, String topic) {
         //metadata about message
         List<Header> recordHeaders = List.of(
                 new RecordHeader("event-source", "scanner".getBytes()),
                 new RecordHeader("event-source", "scanner".getBytes()));
-        return new ProducerRecord<String,String>(topic, null,key,value,recordHeaders);
+        return new ProducerRecord<String,Game>(topic, null,key,value,recordHeaders);
     }
 
 
 
-    private void handleFailure(String key, String value, Throwable ex) {
+    private void handleFailure(String key, Game value, Throwable ex) {
         log.error("Error sending the message and the exception is {}", ex.getMessage());
         try{
             throw  ex;
@@ -64,7 +64,7 @@ public class GameProducer {
         }
     }
 
-    private void handleSuccess(String key, String value, SendResult<String, String> result) {
+    private void handleSuccess(String key, Game value, SendResult<String, Game> result) {
         log.info("Message sent successfully for the key : {} and the value is {} , partition is {}", key, value, result.getRecordMetadata().partition());
     }
 

@@ -22,17 +22,33 @@ public class GameController {
 
     @GraphQLMutation(name = "createGame")
     public boolean createGame(@GraphQLNonNull String id) {
+        GameDTO gameDTO = generateGame(id);
+        convertgameDTOtoProtobuf(gameDTO);
+        gameService.createGame(gameDTO);
+
+        return true;
+    }
+
+    private void convertgameDTOtoProtobuf(GameDTO gameDTO) {
+
+    }
+
+    private GameDTO generateGame(@GraphQLNonNull String id) {
         GameDTO gameDTO = new GameDTO();
         gameDTO.setCompetition_id("1");
         gameDTO.setId(id);
         gameDTO.setStart_time(new Date());
         gameDTO.setVenue("2");
+        Team teamA = generateTeam();
+        gameDTO.setTeams(List.of(teamA));
+        return gameDTO;
+    }
+
+    private Team generateTeam() {
         Team teamA = new Team();
         teamA.setId("A");
         teamA.setType(TeamHostDesignation.AWAY);
-        gameDTO.setTeams(List.of(teamA));
-        gameService.createGame(gameDTO);
-        return true;
+        return teamA;
     }
 
 }
