@@ -74,6 +74,18 @@
             <version>3.11.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.flutter.smf.se.bb</groupId>
+            <artifactId>game-contracts</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.flutter.streaming.kafka</groupId>
+            <artifactId>spring-kafka-protobuf</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
