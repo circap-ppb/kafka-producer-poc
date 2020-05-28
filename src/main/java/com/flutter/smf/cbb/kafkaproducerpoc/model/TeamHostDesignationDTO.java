@@ -1,6 +1,7 @@
 package com.flutter.smf.cbb.kafkaproducerpoc.model;
 
-public enum TeamHostDesignation {
+public enum TeamHostDesignationDTO {
     HOME,
-    AWAY
+    AWAY,
+    UNRECOGNIZED
 }

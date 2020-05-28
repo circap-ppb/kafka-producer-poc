@@ -10,8 +10,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GameDTO {
     private String id;
-    private String competition_id;
-    private Date start_time;
+    private String competitionId;
+    private Date startTime;
     private String venue;
-    private List<Team> teams;
+    private List<TeamDTO> teamDTOS;
 }

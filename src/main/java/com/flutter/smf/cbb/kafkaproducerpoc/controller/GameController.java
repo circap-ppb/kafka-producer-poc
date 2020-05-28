@@ -1,9 +1,10 @@
 package com.flutter.smf.cbb.kafkaproducerpoc.controller;
 
 import com.flutter.smf.cbb.kafkaproducerpoc.model.GameDTO;
-import com.flutter.smf.cbb.kafkaproducerpoc.model.Team;
-import com.flutter.smf.cbb.kafkaproducerpoc.model.TeamHostDesignation;
+import com.flutter.smf.cbb.kafkaproducerpoc.model.TeamDTO;
+import com.flutter.smf.cbb.kafkaproducerpoc.model.TeamHostDesignationDTO;
 import com.flutter.smf.cbb.kafkaproducerpoc.service.GameService;
+import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLNonNull;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
@@ -21,34 +22,32 @@ public class GameController {
     private final GameService gameService;
 
     @GraphQLMutation(name = "createGame")
-    public boolean createGame(@GraphQLNonNull String id) {
+    public boolean createGame(@GraphQLNonNull @GraphQLArgument(name = "id") String id) {
         GameDTO gameDTO = generateGame(id);
-        convertgameDTOtoProtobuf(gameDTO);
         gameService.createGame(gameDTO);
-
         return true;
-    }
-
-    private void convertgameDTOtoProtobuf(GameDTO gameDTO) {
-
     }
 
     private GameDTO generateGame(@GraphQLNonNull String id) {
         GameDTO gameDTO = new GameDTO();
-        gameDTO.setCompetition_id("1");
+        gameDTO.setCompetitionId("1");
         gameDTO.setId(id);
-        gameDTO.setStart_time(new Date());
+        gameDTO.setStartTime(new Date());
         gameDTO.setVenue("2");
-        Team teamA = generateTeam();
-        gameDTO.setTeams(List.of(teamA));
+        List<TeamDTO> teams = generateTeam();
+        gameDTO.setTeamDTOS(teams);
         return gameDTO;
     }
 
-    private Team generateTeam() {
-        Team teamA = new Team();
-        teamA.setId("A");
-        teamA.setType(TeamHostDesignation.AWAY);
-        return teamA;
+    private List<TeamDTO> generateTeam() {
+        TeamDTO teamDTOA = new TeamDTO();
+        teamDTOA.setId("A");
+        teamDTOA.setType(TeamHostDesignationDTO.AWAY);
+
+        TeamDTO teamDTOB = new TeamDTO();
+        teamDTOB.setId("B");
+        teamDTOB.setType(TeamHostDesignationDTO.HOME);
+        return List.of(teamDTOA, teamDTOB);
     }
 
 }

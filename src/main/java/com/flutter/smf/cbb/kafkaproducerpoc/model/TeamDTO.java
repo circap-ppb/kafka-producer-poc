@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class Team {
+public class TeamDTO {
     private String id;
-    private TeamHostDesignation type;
+    private TeamHostDesignationDTO type;
 }
