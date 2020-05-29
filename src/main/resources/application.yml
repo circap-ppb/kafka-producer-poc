@@ -13,7 +13,7 @@ spring:
     template:
       default-topic: cbb-game-events
     producer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: kafka:9092
       key-serializer: "org.apache.kafka.common.serialization.StringSerializer"
       value-serializer: "com.flutter.streaming.kafka.serializer.protobuf.ProtobufSerializer"
       properties:
@@ -23,5 +23,5 @@ spring:
         "protobuf.add.type.headers": true
     admin:
       properties:
-        bootstrap.servers: localhost:9092
+        bootstrap.servers: kafka:9092
 
