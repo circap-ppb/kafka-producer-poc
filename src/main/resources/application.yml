@@ -11,9 +11,9 @@ spring:
   profiles: local
   kafka:
     template:
-      default-topic: cbb-game-events
+      default-topic:  cbb.gameui.events
     producer:
-      bootstrap-servers: kafka:9092
+    bootstrap-servers: 10.133.176.0:9092,10.133.178.0:9092,10.133.180.0:9092
       key-serializer: "org.apache.kafka.common.serialization.StringSerializer"
       value-serializer: "com.flutter.streaming.kafka.serializer.protobuf.ProtobufSerializer"
       properties:
@@ -21,7 +21,11 @@ spring:
         retries: 10
         retry.backoff.ms: 1000
         "protobuf.add.type.headers": true
-    admin:
-      properties:
-        bootstrap.servers: kafka:9092
-
+        "security.protocol": SSL
+    ssl:
+      key-store-location: file:/opt/ssl/keystore.jks
+      key-store-password: ${kafka.jks.password:test123}
+      key-password: ${kafka.jks.password:test123}
+      trust-store-location: file:/opt/ssl/truststore.jks
+      trust-store-password: ${kafka.jks.password:test123}
+      protocol: SSL

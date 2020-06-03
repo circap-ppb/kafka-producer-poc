@@ -12,7 +12,7 @@ public class kafkaConfig {
 
     @Bean
     public NewTopic GameEvents(){
-        return TopicBuilder.name("cbb-game-events")
+        return TopicBuilder.name(" cbb.gameui.events")
                 .partitions(1)
                 .replicas(1)
                 .build();
