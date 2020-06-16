@@ -47,5 +47,6 @@ secret_key     ****************m+dC shared-credentials-file
 ###Run Docker image:
 ```docker run -it -p 8080:8080 -v ~/.aws:/root/.aws:ro -e AWS_REGION=ap-southeast-2 -e AWS_PROFILE=saml -e KAFKA_CONSUMER_DOMAIN_NAME=smf-cbb-gameui.int.ts.dev.sbet.cloud -e APPLICATION=smf-cbb-gameui -e SECRETS_MANAGER_PREFIX=/app/smf-cbb -e SECRETS_MANAGER_SERVICE_NAME=gameui -e PARAMETER_STORE_PREFIX=/app/smf-cbb -e PARAMETER_STORE_SERVICE_NAME=gameui kafka-producer-poc```
 
+for Windows users, the volume should be `location_of_.aws_folder:/root/.aws:ro`
 ###GraphQL client tp send games:
 http://localhost:8080/gui
