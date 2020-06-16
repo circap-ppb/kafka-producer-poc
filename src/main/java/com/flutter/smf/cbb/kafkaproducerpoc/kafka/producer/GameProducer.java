@@ -22,7 +22,7 @@ public class GameProducer {
 
     KafkaTemplate<String,String> kafkaTemplate;
 
-    private static String TOPIC = " cbb.gameui.events";
+    private static String TOPIC = "cbb.gameui.events";
 
     public ListenableFuture<SendResult<String, Game>> sendGameEventSyncProducerRecord(Game game) {
 

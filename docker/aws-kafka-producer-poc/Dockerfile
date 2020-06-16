@@ -18,4 +18,6 @@ COPY docker/aws-kafka-producer-poc/startup.sh /startup.sh
 COPY docker/aws-kafka-producer-poc/setup-ssl-configuration.sh /setup-ssl-configuration.sh
 RUN chmod +x /setup-ssl-configuration.sh
 
+EXPOSE 8080:8080
+
 ENTRYPOINT ["/bin/bash", "/startup.sh"]

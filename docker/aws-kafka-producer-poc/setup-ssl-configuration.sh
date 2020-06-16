@@ -27,25 +27,26 @@ function create_and_change_to_ssl_cert_dir(){
 function get_certificate_arn(){
   echo "- Retrieving Certificate ARN "
   # Get Certificate ARN for kafka consumer
-  CERTIFICATE_ARN=$(aws --region "${THIS_REGION}" acm list-certificates --output text | grep "${KAFKA_CONSUMER_DOMAIN_NAME}" | awk '{ print $2 }')
+  CERTIFICATE_ARN=$(aws --no-verify-ssl --region "${THIS_REGION}" acm list-certificates --output text | grep "${KAFKA_CONSUMER_DOMAIN_NAME}" | awk '{ print $2 }')
   echo "- ${CERTIFICATE_ARN}"
 }
 
 function get_private_key_name(){
   echo "- get private key name for /keys/${KAFKA_CONSUMER_DOMAIN_NAME}"
-  PRIVATE_KEY_NAME=$(aws ssm describe-parameters --region "${THIS_REGION}" --filters Key=Name,Values=/keys/"${KAFKA_CONSUMER_DOMAIN_NAME}" --output json|jq -r ".Parameters[0].Name")
+  PRIVATE_KEY_NAME=$(aws --no-verify-ssl  ssm describe-parameters --region "${THIS_REGION}" --filters Key=Name,Values=/keys/"${KAFKA_CONSUMER_DOMAIN_NAME}" --output json|jq -r ".Parameters[0].Name")
   echo "- ${PRIVATE_KEY_NAME}"
 }
 
 function get_app_private_key(){
   echo "- get Private Key for Service"
-  aws --region "${THIS_REGION}" ssm get-parameter --name "${PRIVATE_KEY_NAME}" --with-decryption --query 'Parameter.Value' --output text > "${PRIVATE_KEY_FILE}"
+  aws --no-verify-ssl  --region "${THIS_REGION}" ssm get-parameter --name "${PRIVATE_KEY_NAME}" --with-decryption --query 'Parameter.Value' --output text > "${PRIVATE_KEY_FILE}"
 }
 
 function export_app_certificate(){
   echo "- Creating Certificate files"
   ## Export Certificate From AWS Certificate Manager and format into files
   aws acm get-certificate \
+    --no-verify-ssl \
     --certificate-arn "${CERTIFICATE_ARN}" \
     --region "${THIS_REGION}" > "${EXPORTED_CERTIFICATE_INFO_FILE}"
   jq -r '.["Certificate"]' "${EXPORTED_CERTIFICATE_INFO_FILE}" > "${CERT}"
