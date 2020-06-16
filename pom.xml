@@ -64,13 +64,13 @@
 
         <!--    protobuf - contracts    -->
         <dependency>
-            <groupId>com.flutter.smf.se.bb</groupId>
+            <groupId>com.flutter.smf.bb</groupId>
             <artifactId>game-contracts</artifactId>
             <version>1.0.1</version>
         </dependency>
 
         <dependency>
-            <groupId>com.flutter.smf.se.bb</groupId>
+            <groupId>com.flutter.smf.bb</groupId>
             <artifactId>core-contracts</artifactId>
             <version>1.0.1</version>
         </dependency>

@@ -3,7 +3,7 @@ package com.flutter.smf.cbb.kafkaproducerpoc.model.mapper;
 import com.flutter.smf.cbb.kafkaproducerpoc.model.GameDTO;
 import com.flutter.smf.cbb.kafkaproducerpoc.model.TeamDTO;
 import com.flutter.smf.cbb.kafkaproducerpoc.model.TeamHostDesignationDTO;
-import com.flutter.smf.se.bb.contract.TeamHostDesignation;
+import com.flutter.smf.bb.contract.TeamHostDesignation;
 import com.flutter.smf.se.bb.game.contract.Game;
 import com.flutter.smf.se.bb.game.contract.Team;
 import org.mapstruct.CollectionMappingStrategy;
