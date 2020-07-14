@@ -2,10 +2,7 @@ package com.flutter.smf.cbb.kafkaproducerpoc.service;
 
 import com.flutter.smf.cbb.kafkaproducerpoc.kafka.producer.GameProducer;
 import com.flutter.smf.cbb.kafkaproducerpoc.model.GameDTO;
-import com.flutter.smf.cbb.kafkaproducerpoc.model.mapper.GameDTOMapper;
-import com.flutter.smf.cbb.kafkaproducerpoc.model.mapper.GameDTOMapperImpl;
-import com.flutter.smf.se.bb.game.contract.Game;
-import com.flutter.smf.se.bb.game.contract.Team;
+import com.flutter.smf.feeds.bb.contract.FeedsBasketballGameScheduled;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -20,7 +17,7 @@ public class GameService {
 
     public void createGame(GameDTO gameDTO){
         GameProducer gameProducer = new GameProducer(kafkaTemplate);
-        Game game = GameDTOMapperImpl.INSTANCE.toProto(gameDTO);
+        FeedsBasketballGameScheduled game = FeedsBasketballGameScheduled.newBuilder().build();
         gameProducer.sendGameEventSyncProducerRecord(game);
     }
 }

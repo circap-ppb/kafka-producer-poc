@@ -9,12 +9,15 @@ spring:
       default-topic:  cbb.gameui.events
     producer:
       bootstrap-servers: 10.133.176.241:9092,10.133.179.11:9092,10.133.180.239:9092
+      batch-size: 0
       key-serializer: "org.apache.kafka.common.serialization.StringSerializer"
       value-serializer: "com.flutter.streaming.kafka.serializer.protobuf.ProtobufSerializer"
       properties:
         "protobuf.add.type.headers": true
         "ssl.endpoint.identification.algorithm":
         "security.protocol": SSL
+        "protobuf.type.header.key": "proto_message_type"
+        "protobuf.message.packages": "com.flutter.smf"
     ssl:
       key-store-location: file:/opt/ssl/keystore.jks
       key-store-password: ${kafka.jks.password:test123}
